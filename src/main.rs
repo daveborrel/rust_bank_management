@@ -1,37 +1,41 @@
 use std::io;
-use rand::Rng;
-use std::cmp::Ordering;
+
+mod structs;  // Ensure `mod structs;` is declared
+use structs::account::Account;
+use structs::client::Client;
 
 fn main() {
-    println!("Guess the number!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let client = Client { 
+        username: String::from("testuser"), 
+        password: String::from("123"), 
+        firstName:  String::from("John"), 
+        lastName: String::from("Doe"), 
+        email: String::from("John@example.com"), 
+        accounts: Vec::new(),
+    };
 
-    println!("The secret number is: {secret_number}");
+    println!("Welcome to your bank!");
 
-    loop {
-        println!("Please input your guess.");
+    println!("Please Enter Username");
 
-        let mut guess = String::new();
-    
-        io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
-    
-        let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
-            Err(_) => continue,
-        };
-    
-        println!("You guessed: {}", guess);
-    
-        match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => {
-                println!("You win!");
-                break;
-            }
-        }
+    let mut username = String::new();
+
+    io::stdin()
+    .read_line(&mut username)
+    .expect("Username does not match anything in our records. Please try again.");
+
+    println!("Please Enter Password");
+
+    let mut password = String::new();
+
+    io::stdin()
+    .read_line(&mut password)
+    .expect("Incorrect password. Please try again.");
+
+    if username.trim() == client.username && password.trim() == client.password {
+        println!("Welcome!");
+    } else {
+        println!("Wrong Credentials Try Again");
     }
 }
