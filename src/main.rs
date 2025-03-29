@@ -3,14 +3,15 @@ use std::io;
 mod structs;  // Ensure `mod structs;` is declared
 use structs::account::Account;
 use structs::client::Client;
+use structs::account::AccountType;
 
 fn main() {
 
     let client = Client { 
         username: String::from("testuser"), 
         password: String::from("123"), 
-        firstName:  String::from("John"), 
-        lastName: String::from("Doe"), 
+        first_name:  String::from("John"), 
+        last_name: String::from("Doe"), 
         email: String::from("John@example.com"), 
         accounts: Vec::new(),
     };
@@ -38,4 +39,15 @@ fn main() {
     } else {
         println!("Wrong Credentials Try Again");
     }
+
+    let account = Account {
+        active: true,
+        owner: client,
+        account_type: AccountType::Chequing
+    };
+
+    println!("What would you like to do today?");
+    println!("Withdraw");
+    println!("Deposit");
+    println!("Create an Account");
 }
